@@ -1,0 +1,9 @@
+## Interface: 90001
+## Title: JojoMonk_Joseph Joestar
+## Notes: Add Joseph Joestar SFX for Brewmaster
+## Version: 2.2.1
+## Authors: legendary_xelar in lua code, mixing and editing from Jojo's Bizarre Adventure All Star Battle SFX (ps3)
+## SavedVariablesPerCharacter: jojo_sound
+## Dependencies: JojoMonk
+
+JojoMonk_JosephJoestar.lua

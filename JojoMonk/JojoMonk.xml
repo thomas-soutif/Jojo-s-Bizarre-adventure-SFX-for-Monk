@@ -1,0 +1,226 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<Script file="JojoMonk.lua"/>
+	<Script file="Locale\local.lua"/>
+     <Frame name="JojoMonk" parent="UIParent">
+		<Scripts>
+			 <OnLoad>
+				JojoMonk_OnLoad(self);
+				
+			</OnLoad>
+			
+			<OnEvent>
+				JojoMonk_OnEvent(self, event, ...);
+				
+			</OnEvent>
+			
+        </Scripts>
+	
+    </Frame>
+	
+	
+	
+	
+	
+	<Slider name="MySlider_Template" orientation="HORIZONTAL" enableMouse="true" virtual="true">
+		<Size x="144" y="17"/>
+		<HitRectInsets left="0" right="0" top="-10" bottom="-10"/>
+		<Backdrop bgFile="Interface\Buttons\UI-SliderBar-Background"
+			edgeFile="Interface\Buttons\UI-SliderBar-Border" tile="true">
+		  <EdgeSize val="8"/>
+		  <TileSize val="8"/>
+		  <BackgroundInsets left="3" right="3" top="6" bottom="6"/>
+		</Backdrop>
+		<ThumbTexture name="$parentThumb" file="Interface\Buttons\UI-SliderBar-Button-Horizontal">
+		  <Size x="32" y="32"/>
+		</ThumbTexture>
+	</Slider>
+
+	
+	
+	
+	<Include file="Locale\Locale.xml"/>	
+	<Frame name="JojoMonkGUIFrame">
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString name="$parent_Head" inherits="GameFontNormalLarge" text="JojoMonk SFX">
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset>
+								<AbsDimension x="15" y="-15" />
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+
+
+		<Frames>
+			<CheckButton name="$parent_CBSFXActive" inherits="UICheckButtonTemplate">
+				<Size>
+					<AbsDimension x="32" y="32"/>
+				</Size>
+
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parent_Head">
+						<Offset>
+							<AbsDimension x="25" y="-40"/>
+						</Offset>
+					</Anchor>
+				</Anchors>      
+			</CheckButton>
+
+        <Frame name="JojoMonk_CharacterDropDown" id="1">
+            <Anchors>
+                <Anchor point="TOPLEFT" relativeTo="$parent_CBSFXActive">
+                    <Offset>
+                        <AbsDimension x="160" y="-3"/>
+                    </Offset>
+                </Anchor>
+            </Anchors>
+        </Frame>
+
+    </Frames>
+
+    <Frames>
+
+        <CheckButton name="$parent_CBSFXHurt" inherits="UICheckButtonTemplate">
+            <Size>
+                <AbsDimension x="32" y="32"/>
+            </Size>
+
+            <Anchors>
+                <Anchor point="TOPLEFT" relativeTo="$parent_Head">
+                    <Offset>
+                        <AbsDimension x="25" y="-80"/>
+                    </Offset>
+                </Anchor>
+            </Anchors>
+        </CheckButton>
+
+
+
+    </Frames>
+
+    <Frames>
+
+        <CheckButton name="$parent_CBQuoteSFX" inherits="UICheckButtonTemplate">
+            <Size>
+                <AbsDimension x="32" y="32"/>
+            </Size>
+
+            <Anchors>
+                <Anchor point="TOPLEFT" relativeTo="$parent_Head">
+                    <Offset>
+                        <AbsDimension x="25" y="-120"/>
+                    </Offset>
+                </Anchor>
+            </Anchors>
+        </CheckButton>
+
+    </Frames>
+
+
+
+    <Frames>
+
+
+
+        <Slider name="$parent_SLQuoteSFX" inherits="MySlider_Template">
+
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="$parent_Head">
+                        <Offset>
+                            <AbsDimension x="248" y="-156"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+
+        </Slider>
+    </Frames>
+
+    <Layers>
+        <Layer level="ARTWORK">
+            <FontString name="$parent_QuoteFrequency" inherits="GameFontNormalLarge">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="$parent_Head">
+                        <Offset>
+                            <AbsDimension x="68" y="-160" />
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </FontString>
+        </Layer>
+    </Layers>
+
+    <Layers>
+        <Layer level="ARTWORK">
+            <FontString name="$parent_QuoteFrequencyMin" inherits="GameFontNormalLarge">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="$parent_Head">
+                        <Offset>
+                            <AbsDimension x="200" y="-160" />
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </FontString>
+        </Layer>
+    </Layers>
+
+    <Layers>
+        <Layer level="ARTWORK">
+            <FontString name="$parent_QuoteFrequencyMax" inherits="GameFontNormalLarge">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="$parent_Head">
+                        <Offset>
+                            <AbsDimension x="365" y="-160" />
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </FontString>
+        </Layer>
+    </Layers>
+
+    <Frames>
+
+        <CheckButton name="$parent_CBDeadEliteSFX" inherits="UICheckButtonTemplate">
+            <Size>
+                <AbsDimension x="32" y="32"/>
+            </Size>
+
+            <Anchors>
+                <Anchor point="TOPLEFT" relativeTo="$parent_Head">
+                    <Offset>
+                        <AbsDimension x="200" y="-80"/>
+                    </Offset>
+                </Anchor>
+            </Anchors>
+        </CheckButton>
+
+    </Frames>
+        <!--
+        <Frames>
+            <Frame name="JojoMonk_LanguageDropDown" inherits="UIDropDownMenuTemplate" id="1">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="$parent_Language">
+                        <Offset>
+                            <AbsDimension x="142" y="5"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Frame>
+        </Frames>
+        -->
+		
+		
+		<Scripts>
+			<OnLoad>
+				JojoMonk_PanelOnload(self);
+			</OnLoad>
+		</Scripts>
+
+	</Frame>
+	
+	
+</Ui>
