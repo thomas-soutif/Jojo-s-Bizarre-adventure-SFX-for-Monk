@@ -1,10 +1,7 @@
-## Interface: 90100
+## Interface: 110005, 110000, 110002
 ## Title: JojoMonk Interface
 ## Notes: Manage the different characters
-## Version: 4.0.3
+## Version: 4.1
 ## Authors: legendary_xelar in lua and xml code.
-## OptionalDeps:   LibStub, !LibUIDropDownMenu
 ## SavedVariables: JojoMonk_Config
-
-Libs/Libs.xml
 JojoMonk.xml

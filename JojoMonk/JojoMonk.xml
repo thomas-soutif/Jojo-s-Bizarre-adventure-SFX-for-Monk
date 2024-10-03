@@ -1,4 +1,5 @@
-<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
 
 	<Script file="JojoMonk.lua"/>
 	<Script file="Locale\local.lua"/>
@@ -22,7 +23,7 @@
 	
 	
 	
-	<Slider name="MySlider_Template" orientation="HORIZONTAL" enableMouse="true" virtual="true">
+<!-- 	<Slider name="MySlider_Template" orientation="HORIZONTAL" enableMouse="true" virtual="true">
 		<Size x="144" y="17"/>
 		<HitRectInsets left="0" right="0" top="-10" bottom="-10"/>
 		<Backdrop bgFile="Interface\Buttons\UI-SliderBar-Background"
@@ -35,7 +36,7 @@
 		  <Size x="32" y="32"/>
 		</ThumbTexture>
 	</Slider>
-
+ -->
 	
 	
 	
@@ -71,16 +72,17 @@
 				</Anchors>      
 			</CheckButton>
 
-        <Frame name="JojoMonk_CharacterDropDown" id="1">
-            <Anchors>
-                <Anchor point="TOPLEFT" relativeTo="$parent_CBSFXActive">
-                    <Offset>
-                        <AbsDimension x="160" y="-3"/>
-                    </Offset>
-                </Anchor>
-            </Anchors>
-        </Frame>
-
+        
+            <DropdownButton name="$parent_CharacterDropDown" inherits="WowStyle1FilterDropdownTemplate">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="$parent_CBSFXActive" x="-26" y="-64">
+                        <Offset>
+                            <AbsDimension x="160" y="-3"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </DropdownButton>
+        
     </Frames>
 
     <Frames>
@@ -123,11 +125,11 @@
 
 
 
-    <Frames>
+<!--    <Frames>
 
 
 
-        <Slider name="$parent_SLQuoteSFX" inherits="MySlider_Template">
+         <Slider name="$parent_SLQuoteSFX" inherits="MySlider_Template">
 
                 <Anchors>
                     <Anchor point="TOPLEFT" relativeTo="$parent_Head">
@@ -138,7 +140,7 @@
                 </Anchors>
 
         </Slider>
-    </Frames>
+    </Frames> -->
 
     <Layers>
         <Layer level="ARTWORK">
