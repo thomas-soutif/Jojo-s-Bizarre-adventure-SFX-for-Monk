@@ -1,4 +1,4 @@
-## Interface: 90001
+## Interface: 110005, 110000, 110002
 ## Title: JojoMonk_Giorno Giovanna
 ## Notes: Add Giorno Giovanna SFX for windwalker
 ## Version: 2.2.0

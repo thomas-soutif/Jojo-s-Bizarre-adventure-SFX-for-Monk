@@ -1,4 +1,4 @@
-## Interface: 90001
+## Interface: 110005, 110000, 110002
 ## Title: JojoMonk_Josuke Higashikata
 ## Notes: Add Josuke Higashikata SFX for mistweaver and windwalker
 ## Version: 3.2.0

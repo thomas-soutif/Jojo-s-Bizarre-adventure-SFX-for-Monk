@@ -1,4 +1,4 @@
-## Interface: 90001
+## Interface: 110005, 110000, 110002
 ## Title: JojoMonk_Joseph Joestar
 ## Notes: Add Joseph Joestar SFX for Brewmaster
 ## Version: 2.2.1

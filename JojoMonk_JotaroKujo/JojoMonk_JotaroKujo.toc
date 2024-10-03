@@ -1,4 +1,4 @@
-## Interface: 90001
+## Interface: 110005, 110000, 110002
 ## Title: JojoMonk_Jotaro Kujo
 ## Notes: Add Jotaro Kujo SFX for windwalker
 ## Version: 3.2.0
