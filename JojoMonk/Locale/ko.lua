@@ -68,7 +68,7 @@ L['Jotaro_Kujo_QuotePlayer_4'] = "다음에 만나면 네 얼굴에 천 번의 �
 L['Jotaro_Kujo_QuotePlayer_5'] = "꽤 강한 적이었어..."
 L['Jotaro_Kujo_QuotePlayer_6'] = "넌 정말 대단해..."
 L['Jotaro_Kujo_QuotePlayer_7'] = "동정은 없어. 너한테는."
-L['Jotaro_Kujo_QuotePlayer_8'] = "네가 진 이유는
+L['Jotaro_Kujo_QuotePlayer_8'] = "네가 진 이유는"
 L['Jotaro_Kujo_QuotePlayer_9'] = "네가 진 이유는 단 하나야..."
 L['Jotaro_Kujo_QuotePlayer_10'] = "걱정 마... 지금은 내가 봐주고 있는 거야."
 

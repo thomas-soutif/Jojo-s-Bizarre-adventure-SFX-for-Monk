@@ -90,4 +90,4 @@ L['Josuke_Higashikata_QuotePlayer_2'] = "Хорошо, что ты такой и
 L['Josuke_Higashikata_QuotePlayer_3'] = "Это было близко. Но не забывай: Shining Diamond может исцелять! Запомни это, болван."
 L['Josuke_Higashikata_QuotePlayer_4'] = "Нам не нужны такие как ты в нашем городе!"
 L['Josuke_Higashikata_QuotePlayer_5'] = "Молись за вечность!"
-L['Josuke_Higashikata_QuotePlayer_6'] = "Стань единым с камнем
+L['Josuke_Higashikata_QuotePlayer_6'] = "Стань единым с камнем"
