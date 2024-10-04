@@ -12,20 +12,21 @@ function GetLocalCharacterListView()
 	}
 	local vide = true;
 	JojoMonk_CharacterListView = { };
+	
 	for i = 1,6 do
-	name, title, notes, enabled, loadable, reason, security = GetAddOnInfo(Character[i][1]);
-	if(enabled) then 
-		table.insert(JojoMonk_CharacterListView, Character[i][2])
-		
-		vide = false;
-	end -- if
+		name, title, notes, loadable, reason, security, updateAvailable = C_AddOns.GetAddOnInfo(Character[i][1])
+		if(loadable) then 
+			table.insert(JojoMonk_CharacterListView, Character[i][2])
+			
+			vide = false;
+		end -- if
 
 	end -- for
-
+	
 	if(vide) then
 		return {L['no_addon_load']};
 	end
-	return JojoMonk_CharacterListView
+	return JojoMonk_CharacterListView 
 end
 
 function GetLocalLanguageListView()

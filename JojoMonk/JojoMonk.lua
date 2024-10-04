@@ -8,51 +8,50 @@ end
 function JojoMonkPanel_Close()
 
 	JojoMonk_Config.ActiveSFX = JojoMonkGUIFrame_CBSFXActive:GetChecked();
-	if(LibDD:UIDropDownMenu_GetText(JojoMonk_CharacterDropDown) ~= L['no_addon_load']) then
-		JojoMonk_Config.ActiveCharacter = LibDD:UIDropDownMenu_GetText(JojoMonk_CharacterDropDown);
+	
+	local dropdownCharacter = JojoMonkGUIFrame_CharacterDropDown
+	
+	if(dropdownCharacter:GetText() ~= L['no_addon_load']) then
+		JojoMonk_Config.ActiveCharacter = dropdownCharacter:GetText();
 	else
-		LibDD:UIDropDownMenu_SetText(JojoMonk_CharacterDropDown, JojoMonk_Config.ActiveCharacter);
+		setActiveCharacterOnDropDown(JojoMonk_Config.ActiveCharacter)
 	end
+	
 	JojoMonk_Config.ActiveHurtSFX = JojoMonkGUIFrame_CBSFXHurt:GetChecked();
 	JojoMonk_Config.ActiveQuoteSFX = JojoMonkGUIFrame_CBQuoteSFX:GetChecked();
 	JojoMonk_Config.ActiveDeadEliteSFX = JojoMonkGUIFrame_CBDeadEliteSFX:GetChecked();
-	
 	JojoMonk_Config.QuoteFrequencyTime = JojoMonkGUIFrame_SLQuoteSFX:GetValue()
 	
 end
 
-function  JojoMonkPanel_CancelOrLoad()
+function JojoMonkPanel_CancelOrLoad()
 
-
+	JojoMonk_Initialise()
+	
 	JojoMonkGUIFrame_CBSFXActive:SetChecked(JojoMonk_Config.ActiveSFX);
 	JojoMonkGUIFrame_CBSFXHurt:SetChecked(JojoMonk_Config.ActiveHurtSFX);
 	JojoMonkGUIFrame_CBQuoteSFX:SetChecked(JojoMonk_Config.ActiveQuoteSFX);
 	JojoMonkGUIFrame_CBDeadEliteSFX:SetChecked(JojoMonk_Config.ActiveDeadEliteSFX);
-	LibDD:UIDropDownMenu_SetText(JojoMonk_CharacterDropDown, JojoMonk_Config.ActiveCharacter);
+	setActiveCharacterOnDropDown(JojoMonk_Config.ActiveCharacter)
 	JojoMonkGUIFrame_SLQuoteSFX:SetValue(JojoMonk_Config.QuoteFrequencyTime);
+	
 	
 end
 
-function setActiveCharacterOnDropDown()
-
-LibDD:UIDropDownMenu_SetText(JojoMonk_CharacterDropDown, JojoMonk_Config.ActiveCharacter);
-end
-
-function setActiveSFXOnDropDown()
-JojoMonkGUIFrame_CBSFXActive:SetChecked(JojoMonk_Config.ActiveSFX);
-end
 
 function JojoMonk_OnLoad(frame)
 	realm = getNameServer();
 	-- respond to the Player logging in.
     --
 	L = {};
-	LibDD = LibStub:GetLibrary("LibUIDropDownMenu-4.0")
 	L.locale = GetLocale();
     frame:RegisterEvent("PLAYER_ENTERING_WORLD");
 end
 
 
+function setActiveCharacterOnDropDown(characterName)
+	JojoMonkGUIFrame_CharacterDropDown:SetText(characterName)
+end
 
 function JojoMonk_Initialise()
 	
@@ -71,20 +70,24 @@ function JojoMonk_Initialise()
 		JojoMonk_Config.QuoteFrequencyTime = 300;
 		JojoMonk_Config.ActiveCharacter = L['Dio_Brando_drop'];
     end
+	-- Initialize the content of the dropdown button
+	local dropdown = JojoMonkGUIFrame_CharacterDropDown
+	
+	dropdown:SetText(JojoMonk_Config.ActiveCharacter)
+	
+	local function MenuGenerator(owner, rootDescription)
+		for index, characterName in ipairs(GetLocalCharacterListView()) do
+			rootDescription:CreateButton(characterName, function() setActiveCharacterOnDropDown(characterName) end)
+		end
+	end
 
-        
-
-
-	local frame = LibDD:Create_UIDropDownMenu(JojoMonk_CharacterDropDown) -->
-
-	--Create and initialise the drop down frame for character choose
-	--CreateFrame("Frame", frame);
-	LibDD:UIDropDownMenu_Initialize(JojoMonk_CharacterDropDown, JojoMonk_CharacterDropDown_Init);
-	LibDD:UIDropDownMenu_JustifyText(JojoMonk_CharacterDropDown, "LEFT");
-	LibDD:UIDropDownMenu_SetWidth(JojoMonk_CharacterDropDown, 150);
-	LibDD:UIDropDownMenu_SetText(JojoMonk_CharacterDropDown, JojoMonk_Config.ActiveCharacter);
-
-	JojoMonk_CharacterDropDown:Show();
+	dropdown:SetupMenu(MenuGenerator);
+	
+	-- Use for debug
+	--[[ for k, v in pairs(dropdown) do
+		print(k, v)
+	end ]]
+	
 	-- Configure the slider
 	if(JojoMonk_Config.QuoteFrequencyTime == nil) then JojoMonk_Config.QuoteFrequencyTime = 300 end
 	JojoMonkGUIFrame_SLQuoteSFX:SetWidth(100);
@@ -97,33 +100,6 @@ function JojoMonk_Initialise()
 		
 	print("Jojo's Monk : If you encounter problems with the interface, type /jojom");
 	JojoMonk_Init = 1;
-end
-
-
-
-function JojoMonk_CharacterDropDown_Init(self)
-	-- Gets the current text in the DropDown frame
-	--
-
-	local ddtext = LibDD:UIDropDownMenu_GetText(JojoMonk_CharacterDropDown);
-	local info = LibDD:UIDropDownMenu_CreateInfo();
-	for index, filename in ipairs(GetLocalCharacterListView()) do
-		info.text = filename;
-		-- Give it a tick instead of a radio button, and only tick when selected
-		--
-		info.isNotRadio = true;
-		info.checked = (filename == ddtext);
-
-		-- Function to be called when the menu option is selected
-		--
-		info.func = function (self)
-			-- Sets the text of the DropDown frame
-			--
-			LibDD:UIDropDownMenu_SetText(JojoMonk_CharacterDropDown, self:GetText());
-		end
-
-		LibDD:UIDropDownMenu_AddButton(info);
-	end
 end
 
 function JojoMonk_OnEvent(self, event, ...)
@@ -144,7 +120,7 @@ function JojoMonk_OnEvent(self, event, ...)
 		if(isLoad == false) then
 			JojoMonk_Config.ActiveCharacter = "";
 		end
-		LibDD:UIDropDownMenu_SetText(JojoMonk_CharacterDropDown, JojoMonk_Config.ActiveCharacter);
+		setActiveCharacterOnDropDown(JojoMonk_Config.ActiveCharacter)
 		
 	end
 end
@@ -157,7 +133,43 @@ function isActiveCharacterLoad() -- Verify if our active character is load this 
 	return false;
 end
 
-function JojoMonk_PanelOnload(panel)
+-- Create a slider template in Lua (equivalent to MySlider_Template in XML)
+function UpdateSliderUi(slider)
+    -- Create the slider with the "Slider" widget
+    
+    -- Set the size of the slider
+    slider:SetSize(144, 17)
+    
+    -- Set the orientation (horizontal)
+    slider:SetOrientation("HORIZONTAL")
+
+    -- Enable mouse interaction
+    slider:EnableMouse(true)
+
+    -- Define the thumb texture
+    local thumb = slider:CreateTexture(nil, "ARTWORK")
+    thumb:SetTexture("Interface\\Buttons\\UI-SliderBar-Button-Horizontal")
+    thumb:SetSize(32, 32)
+    slider:SetThumbTexture(thumb)
+
+    -- Optional: Apply a backdrop (background and border)
+    slider:SetBackdrop({
+        bgFile = "Interface\\Buttons\\UI-SliderBar-Background",
+        edgeFile = "Interface\\Buttons\\UI-SliderBar-Border",
+        tile = true,
+        tileSize = 8,
+        edgeSize = 8,
+        insets = { left = 3, right = 3, top = 6, bottom = 6 }
+    })
+
+    -- Set HitRectInsets for interaction area
+    slider:SetHitRectInsets(0, 0, -10, -10)
+
+    return slider
+end
+
+
+function JojoMonk_PanelOnload(self)
 		
 		
 		
@@ -185,60 +197,109 @@ function JojoMonk_PanelOnload(panel)
 		JojoMonkGUIFrame_QuoteFrequencyMax:SetText("|cffff8000" ..L['Rarely'] .. "|r");
 		JojoMonkGUIFrame_QuoteFrequencyMax:SetFont(JojoMonkGUIFrame_QuoteFrequencyMax:GetFont(),11);
 		
+		-- Update the slider ui , need to do it now in lua code instead of xml because since 11.0 the backdrop ui is not availabed in xml
+		local slider = JojoMonkGUIFrame_SLQuoteSFX
+		slider = UpdateSliderUi(slider)
 		
-		-- Set the name for the Category for the Panel
-        --
-        panel.name = "Jojo Monk SFX " .. GetAddOnMetadata("JojoMonk", "Version");
-        -- When the player clicks okay, run this function.
-        --
-        panel.okay = function (self) JojoMonkPanel_Close(); end;
+		 -- Register the frame using the new settings system
+		 local category = Settings.RegisterCanvasLayoutCategory(self, "Jojo Monk SFX " .. C_AddOns.GetAddOnMetadata("JojoMonk", "Version"))
+		 Settings.RegisterAddOnCategory(category)
 
-        -- When the player clicks cancel, run this function.
-        --
-        panel.cancel = function (self)  JojoMonkPanel_CancelOrLoad();  end;
+		 -- Save settings when the panel is hidden (replaces `okay`)
+		self:SetScript("OnHide", function(self)
+			JojoMonkPanel_Close()
+		end)
 
-        -- Add the panel to the Interface Options
-        --
-        InterfaceOptions_AddCategory(panel);
-
+		--[[ self:SetScript("OnShow", function(self)
+			JojoMonkPanel_CancelOrLoad()
+		end) ]]
 end
 
 
 SLASH_JOJOMONK1 = "/jojom"; 
 
 function SlashCmdList.JOJOMONK(option)
-	if option == "dio" then
+	
+	local command, suboption = strsplit(" ", option)
+	
+	-- Control SFX chracters
+	if command == "dio" then
 		print("Jojo's Monk_Dio Brando SFX -> activate");
 		JojoMonk_Config.ActiveCharacter = L['Dio_Brando_drop'];
-	elseif option == "jonathan" then
+	elseif command == "jonathan" then
 		print("Jojo's Monk_Jonathan Joestar SFX -> activate");
 		JojoMonk_Config.ActiveCharacter = L['Jonathan_Joestar_drop'];
-	elseif option == "joseph" then
+	elseif command == "joseph" then
 		print("Jojo's Monk_Joseph Joestar SFX -> activate");
 		JojoMonk_Config.ActiveCharacter = L['Joseph_Joestar_drop'];
-	elseif option == "josuke" then
+	elseif command == "josuke" then
 		print("Jojo's Monk__Josuke Higashikata SFX -> activate");
 		JojoMonk_Config.ActiveCharacter = L['Josuke_Higashikata_drop'];
-	elseif option == "jotaro" then
+	elseif command == "jotaro" then
 		print("Jojo's Monk_Jotaro Kujo SFX -> activate");
 		JojoMonk_Config.ActiveCharacter = L['Jotaro_Kujo_drop'];
-	elseif option == "giorno" then
+	elseif command == "giorno" then
 		print("Jojo's Monk_Giorno Giovanna SFX -> activate");
 		JojoMonk_Config.ActiveCharacter = L['Giorno_Giovanna_drop'];
-	elseif option == "on" then
+	
+	-- Control SFX activation and deactivation
+	elseif command == "on" then
 		print("Jojo's Monk -> Activate SFX");
 		JojoMonk_Config.ActiveSFX = true;
-	elseif option == "off" then
+	elseif command == "off" then
 		print("Jojo's Monk -> Desactivate SFX");
 		JojoMonk_Config.ActiveSFX = false;
+	
+	 -- Control hurt damage sound effects
+    elseif command == "hurtdamage" then
+        if suboption == "on" then
+			print("Jojo's Monk -> Hurt Damage SFX activated");
+			JojoMonk_Config.ActiveHurtSFX = true;
+        elseif suboption == "off" then
+            print("Jojo's Monk -> Hurt Damage SFX deactivated");
+            JojoMonk_Config.ActiveHurtSFX = false;
+        end
+
+    -- Control player and elite SFX
+    elseif command == "playersandelite" then
+        if suboption == "on" then
+            print("Jojo's Monk -> Player and Elite SFX activated");
+            JojoMonk_Config.ActiveDeadEliteSFX = true;
+        elseif suboption == "off" then
+            print("Jojo's Monk -> Player and Elite SFX deactivated");
+            JojoMonk_Config.ActiveDeadEliteSFX = false;
+        end
+
+    -- Control quote SFX
+    elseif command == "quotesfx" then
+        if suboption == "on" then
+            print("Jojo's Monk -> Quote SFX activated");
+            JojoMonk_Config.ActiveQuoteSFX = true;
+        elseif suboption == "off" then
+            print("Jojo's Monk -> Quote SFX deactivated");
+            JojoMonk_Config.ActiveQuoteSFX = false;
+        end	
+	-- Control frequency quote
+	elseif command == "frequencyquote" then
+		local frequencyValue = tonumber(suboption);
+        if frequencyValue and frequencyValue >= 90 and frequencyValue <= 600 then
+            print("Jojo's Monk -> Frequency quote set to " .. frequencyValue)
+            JojoMonk_Config.QuoteFrequencyTime = frequencyValue
+        else
+            print("Invalid frequency value. Please provide a value between 0 and 600.")
+        end
 	else
 		print("Jojo's Monk command : ");
 		print("Choose character : /jojom <dio - jonathan - joseph - josuke - jotaro - giorno>");
 		print("Activate/Desactivate SFX : /jojom <on-off>");
+		print("Control Hurt Damage SFX: /jojom hurtdamage <on-off>");
+        print("Control Player and Elite SFX: /jojom playersandelite <on-off>");
+        print("Control Quote SFX: /jojom quotesfx <on-off>");
+		print("Set Frequency for quote (in seconds): /jojom frequencyquote <90-600>")
 		
 	end
-	setActiveCharacterOnDropDown();
-	setActiveSFXOnDropDown();
+
+	JojoMonkPanel_CancelOrLoad()
 end
 
 
