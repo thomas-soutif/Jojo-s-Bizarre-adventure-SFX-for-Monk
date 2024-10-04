@@ -20,7 +20,7 @@ function JojoMonkPanel_Close()
 	JojoMonk_Config.ActiveHurtSFX = JojoMonkGUIFrame_CBSFXHurt:GetChecked();
 	JojoMonk_Config.ActiveQuoteSFX = JojoMonkGUIFrame_CBQuoteSFX:GetChecked();
 	JojoMonk_Config.ActiveDeadEliteSFX = JojoMonkGUIFrame_CBDeadEliteSFX:GetChecked();
-	--JojoMonk_Config.QuoteFrequencyTime = JojoMonkGUIFrame_SLQuoteSFX:GetValue()
+	JojoMonk_Config.QuoteFrequencyTime = JojoMonkGUIFrame_SLQuoteSFX:GetValue()
 	
 end
 
@@ -33,7 +33,7 @@ function JojoMonkPanel_CancelOrLoad()
 	JojoMonkGUIFrame_CBQuoteSFX:SetChecked(JojoMonk_Config.ActiveQuoteSFX);
 	JojoMonkGUIFrame_CBDeadEliteSFX:SetChecked(JojoMonk_Config.ActiveDeadEliteSFX);
 	setActiveCharacterOnDropDown(JojoMonk_Config.ActiveCharacter)
-	--JojoMonkGUIFrame_SLQuoteSFX:SetValue(JojoMonk_Config.QuoteFrequencyTime);
+	JojoMonkGUIFrame_SLQuoteSFX:SetValue(JojoMonk_Config.QuoteFrequencyTime);
 	
 end
 
@@ -91,15 +91,14 @@ function JojoMonk_Initialise()
 		print(k, v)
 	end ]]
 	
-	--  NEED TO BE FIX !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	-- Configure the slider
-	--[[ if(JojoMonk_Config.QuoteFrequencyTime == nil) then JojoMonk_Config.QuoteFrequencyTime = 300 end
+	if(JojoMonk_Config.QuoteFrequencyTime == nil) then JojoMonk_Config.QuoteFrequencyTime = 300 end
 	JojoMonkGUIFrame_SLQuoteSFX:SetWidth(100);
 	JojoMonkGUIFrame_SLQuoteSFX:SetHeight(20);
 	JojoMonkGUIFrame_SLQuoteSFX:Enable();
 	JojoMonkGUIFrame_SLQuoteSFX:SetMinMaxValues(90, 600)
 	JojoMonkGUIFrame_SLQuoteSFX:SetValue(JojoMonk_Config.QuoteFrequencyTime)
-	JojoMonkGUIFrame_SLQuoteSFX:SetValueStep(1)  ]]
+	JojoMonkGUIFrame_SLQuoteSFX:SetValueStep(1) 
 	
 		
 	print("Jojo's Monk : If you encounter problems with the interface, type /jojom");
@@ -124,7 +123,7 @@ function JojoMonk_OnEvent(self, event, ...)
 		if(isLoad == false) then
 			JojoMonk_Config.ActiveCharacter = "";
 		end
-		--LibDD:UIDropDownMenu_SetText(JojoMonk_CharacterDropDown, JojoMonk_Config.ActiveCharacter);
+		setActiveCharacterOnDropDown(JojoMonk_Config.ActiveCharacter)
 		
 	end
 end
@@ -136,6 +135,42 @@ function isActiveCharacterLoad() -- Verify if our active character is load this 
 		end
 	return false;
 end
+
+-- Create a slider template in Lua (equivalent to MySlider_Template in XML)
+function UpdateSliderUi(slider)
+    -- Create the slider with the "Slider" widget
+    
+    -- Set the size of the slider
+    slider:SetSize(144, 17)
+    
+    -- Set the orientation (horizontal)
+    slider:SetOrientation("HORIZONTAL")
+
+    -- Enable mouse interaction
+    slider:EnableMouse(true)
+
+    -- Define the thumb texture
+    local thumb = slider:CreateTexture(nil, "ARTWORK")
+    thumb:SetTexture("Interface\\Buttons\\UI-SliderBar-Button-Horizontal")
+    thumb:SetSize(32, 32)
+    slider:SetThumbTexture(thumb)
+
+    -- Optional: Apply a backdrop (background and border)
+    slider:SetBackdrop({
+        bgFile = "Interface\\Buttons\\UI-SliderBar-Background",
+        edgeFile = "Interface\\Buttons\\UI-SliderBar-Border",
+        tile = true,
+        tileSize = 8,
+        edgeSize = 8,
+        insets = { left = 3, right = 3, top = 6, bottom = 6 }
+    })
+
+    -- Set HitRectInsets for interaction area
+    slider:SetHitRectInsets(0, 0, -10, -10)
+
+    return slider
+end
+
 
 function JojoMonk_PanelOnload(self)
 		
@@ -165,7 +200,10 @@ function JojoMonk_PanelOnload(self)
 		JojoMonkGUIFrame_QuoteFrequencyMax:SetText("|cffff8000" ..L['Rarely'] .. "|r");
 		JojoMonkGUIFrame_QuoteFrequencyMax:SetFont(JojoMonkGUIFrame_QuoteFrequencyMax:GetFont(),11);
 		
-
+		-- Update the slider ui , need to do it now in lua code instead of xml because since 11.0 the backdrop ui is not availabed in xml
+		local slider = JojoMonkGUIFrame_SLQuoteSFX
+		slider = UpdateSliderUi(slider)
+		
 		 -- Register the frame using the new settings system
 		 local category = Settings.RegisterCanvasLayoutCategory(self, "Jojo Monk SFX " .. C_AddOns.GetAddOnMetadata("JojoMonk", "Version"))
 		 Settings.RegisterAddOnCategory(category)
