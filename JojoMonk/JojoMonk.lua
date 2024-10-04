@@ -35,12 +35,9 @@ function JojoMonkPanel_CancelOrLoad()
 	setActiveCharacterOnDropDown(JojoMonk_Config.ActiveCharacter)
 	JojoMonkGUIFrame_SLQuoteSFX:SetValue(JojoMonk_Config.QuoteFrequencyTime);
 	
+	
 end
 
-
-function setActiveSFXOnDropDown()
-JojoMonkGUIFrame_CBSFXActive:SetChecked(JojoMonk_Config.ActiveSFX);
-end
 
 function JojoMonk_OnLoad(frame)
 	realm = getNameServer();
@@ -212,7 +209,7 @@ function JojoMonk_PanelOnload(self)
 		self:SetScript("OnHide", function(self)
 			JojoMonkPanel_Close()
 		end)
-		
+
 		--[[ self:SetScript("OnShow", function(self)
 			JojoMonkPanel_CancelOrLoad()
 		end) ]]
@@ -222,38 +219,87 @@ end
 SLASH_JOJOMONK1 = "/jojom"; 
 
 function SlashCmdList.JOJOMONK(option)
-	if option == "dio" then
+	
+	local command, suboption = strsplit(" ", option)
+	
+	-- Control SFX chracters
+	if command == "dio" then
 		print("Jojo's Monk_Dio Brando SFX -> activate");
 		JojoMonk_Config.ActiveCharacter = L['Dio_Brando_drop'];
-	elseif option == "jonathan" then
+	elseif command == "jonathan" then
 		print("Jojo's Monk_Jonathan Joestar SFX -> activate");
 		JojoMonk_Config.ActiveCharacter = L['Jonathan_Joestar_drop'];
-	elseif option == "joseph" then
+	elseif command == "joseph" then
 		print("Jojo's Monk_Joseph Joestar SFX -> activate");
 		JojoMonk_Config.ActiveCharacter = L['Joseph_Joestar_drop'];
-	elseif option == "josuke" then
+	elseif command == "josuke" then
 		print("Jojo's Monk__Josuke Higashikata SFX -> activate");
 		JojoMonk_Config.ActiveCharacter = L['Josuke_Higashikata_drop'];
-	elseif option == "jotaro" then
+	elseif command == "jotaro" then
 		print("Jojo's Monk_Jotaro Kujo SFX -> activate");
 		JojoMonk_Config.ActiveCharacter = L['Jotaro_Kujo_drop'];
-	elseif option == "giorno" then
+	elseif command == "giorno" then
 		print("Jojo's Monk_Giorno Giovanna SFX -> activate");
 		JojoMonk_Config.ActiveCharacter = L['Giorno_Giovanna_drop'];
-	elseif option == "on" then
+	
+	-- Control SFX activation and deactivation
+	elseif command == "on" then
 		print("Jojo's Monk -> Activate SFX");
 		JojoMonk_Config.ActiveSFX = true;
-	elseif option == "off" then
+	elseif command == "off" then
 		print("Jojo's Monk -> Desactivate SFX");
 		JojoMonk_Config.ActiveSFX = false;
+	
+	 -- Control hurt damage sound effects
+    elseif command == "hurtdamage" then
+        if suboption == "on" then
+			print("Jojo's Monk -> Hurt Damage SFX activated");
+			JojoMonk_Config.ActiveHurtSFX = true;
+        elseif suboption == "off" then
+            print("Jojo's Monk -> Hurt Damage SFX deactivated");
+            JojoMonk_Config.ActiveHurtSFX = false;
+        end
+
+    -- Control player and elite SFX
+    elseif command == "playersandelite" then
+        if suboption == "on" then
+            print("Jojo's Monk -> Player and Elite SFX activated");
+            JojoMonk_Config.ActiveDeadEliteSFX = true;
+        elseif suboption == "off" then
+            print("Jojo's Monk -> Player and Elite SFX deactivated");
+            JojoMonk_Config.ActiveDeadEliteSFX = false;
+        end
+
+    -- Control quote SFX
+    elseif command == "quotesfx" then
+        if suboption == "on" then
+            print("Jojo's Monk -> Quote SFX activated");
+            JojoMonk_Config.ActiveQuoteSFX = true;
+        elseif suboption == "off" then
+            print("Jojo's Monk -> Quote SFX deactivated");
+            JojoMonk_Config.ActiveQuoteSFX = false;
+        end	
+	-- Control frequency quote
+	elseif command == "frequencyquote" then
+		local frequencyValue = tonumber(suboption);
+        if frequencyValue and frequencyValue >= 90 and frequencyValue <= 600 then
+            print("Jojo's Monk -> Frequency quote set to " .. frequencyValue)
+            JojoMonk_Config.QuoteFrequencyTime = frequencyValue
+        else
+            print("Invalid frequency value. Please provide a value between 0 and 600.")
+        end
 	else
 		print("Jojo's Monk command : ");
 		print("Choose character : /jojom <dio - jonathan - joseph - josuke - jotaro - giorno>");
 		print("Activate/Desactivate SFX : /jojom <on-off>");
+		print("Control Hurt Damage SFX: /jojom hurtdamage <on-off>");
+        print("Control Player and Elite SFX: /jojom playersandelite <on-off>");
+        print("Control Quote SFX: /jojom quotesfx <on-off>");
+		print("Set Frequency for quote (in seconds): /jojom frequencyquote <90-600>")
 		
 	end
-	setActiveCharacterOnDropDown()
-	setActiveSFXOnDropDown();
+
+	JojoMonkPanel_CancelOrLoad()
 end
 
 
