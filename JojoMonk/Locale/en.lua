@@ -13,6 +13,7 @@ L['Active_DeadElite_SFX'] = "Enable Dead Elite and Players SFX"
 L['Frequency'] = "Frequency"
 L['Often'] = "Often"
 L['Rarely'] = "Rarely"
+
 L['Dio_Brando_Quote_1'] = "Oh, what rapture! Soon I'll be able to stop time for one, ten, even 60 minutes..."
 L['Dio_Brando_Quote_2'] = "Got to match the right blood with the right body...Look, it's mixing in perfectly!"
 L['Dio_Brando_Quote_3'] = "Hmph! You're mine! If we were playing chess or shogi right now, you'd be in CHECKMATE!"
@@ -82,7 +83,6 @@ L['Josuke_Higashikata_Quote_9'] = "I can do this! I can bend it,I swear!"
 L['Josuke_Higashikata_Quote_10'] = "OH YEAH! Whoops, sorry to scare you. That's just my pump-up scream! OH YEAH!"
 L['Josuke_Higashikata_Quote_11'] = "You have the perfect strategy! Except for the parts that won't work. Like all of it."
 L['Josuke_Higashikata_Quote_12'] = "I dunno why, really. I just suddenly thought to myself, 'This isn't worth dyin for.'"
-
 
 L['Josuke_Higashikata_QuotePlayer_1'] = "My pride would never allow me to lose to you!"
 L['Josuke_Higashikata_QuotePlayer_2'] = "Good thing you're such an idiot or I might have lost!"
