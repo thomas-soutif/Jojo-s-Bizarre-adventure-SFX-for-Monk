@@ -1,7 +1,7 @@
-## Interface: 110005, 110000, 110002
+## Interface: 110005, 110000, 110002, 120000
 ## Title: JojoMonk Interface
 ## Notes: Manage the different characters
-## Version: 4.1
+## Version: 4.2
 ## Authors: legendary_xelar in lua and xml code.
 ## SavedVariables: JojoMonk_Config
 JojoMonk.xml

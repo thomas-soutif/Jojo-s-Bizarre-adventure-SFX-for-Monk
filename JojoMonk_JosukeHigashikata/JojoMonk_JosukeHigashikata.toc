@@ -1,7 +1,7 @@
-## Interface: 110005, 110000, 110002
+## Interface: 120000
 ## Title: JojoMonk_Josuke Higashikata
 ## Notes: Add Josuke Higashikata SFX for mistweaver and windwalker
-## Version: 3.2.0
+## Version: 4.2
 ## Authors: legendary_xelar in lua code, mixing and editing from Jojo's Bizarre Adventure All Star Battle SFX (ps3)
 ## SavedVariablesPerCharacter: jojo_sound
 ## Dependencies: JojoMonk
